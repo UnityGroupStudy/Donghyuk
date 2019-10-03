@@ -31,6 +31,15 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if(KeyController.I.Long(KeyCode.Space, 1f))
+            Debug.Log("SPACE");
+        if(KeyController.I.LongUp(KeyCode.Space, 1f))
+            Debug.Log("SPACE UP");
+        if(KeyController.I.Double(KeyCode.F, 0.3f))
+            Debug.Log("F");
+        if(KeyController.I.Double(KeyCode.G, 0.3f))
+            Debug.Log("G");
+
         CheckKey();
         Rotate();
 
