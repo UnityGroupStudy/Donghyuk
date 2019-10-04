@@ -17,6 +17,7 @@ public class KeyController : MonoBehaviour
     public int[] keyValues;
 
     public int[] keyDouble;
+    public int[] keyDoubleUp;
 
     public int[] keyIndexs;
 
@@ -34,6 +35,7 @@ public class KeyController : MonoBehaviour
         keyValues = new int[keyLength];
         
         keyDouble = new int[keyLength];
+        keyDoubleUp = new int[keyLength];
 
         keyIndexs = new int[510];
 
@@ -42,6 +44,7 @@ public class KeyController : MonoBehaviour
             keyUpTimes[i] = 0;
             keyValues[i] = (int)System.Enum.GetValues(typeof(KeyCode)).GetValue(i);
             keyDouble[i] = 0;
+            keyDoubleUp[i] = 0;
 
             keyIndexs[keyValues[i]] = i;
         }
@@ -91,6 +94,21 @@ public class KeyController : MonoBehaviour
         if(keyDouble[Index(key)] >= 2) {
             result = true;
             keyDouble[Index(key)] = 0;
+        }
+
+        return result;
+    }
+    public bool DoubleUp(KeyCode key, float time) {
+        bool result = false;
+        if(keyTimes[Index(key)] >= time || keyUpTimes[Index(key)] >= time)
+            keyDoubleUp[Index(key)] = 0;
+
+        if(Input.GetKeyUp(key))
+            keyDoubleUp[Index(key)] += 1;
+
+        if(keyDoubleUp[Index(key)] >= 2) {
+            result = true;
+            keyDoubleUp[Index(key)] = 0;
         }
 
         return result;

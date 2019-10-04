@@ -39,6 +39,8 @@ public class PlayerController : MonoBehaviour
             Debug.Log("F");
         if(KeyController.I.Double(KeyCode.G, 0.3f))
             Debug.Log("G");
+        if(KeyController.I.DoubleUp(KeyCode.H, 0.3f))
+            Debug.Log("H");
 
         CheckKey();
         Rotate();
