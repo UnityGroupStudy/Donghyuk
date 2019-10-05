@@ -31,7 +31,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if(KeyController.I.Long(KeyCode.Space, 1f))
+        /*if(KeyController.I.Long(KeyCode.Space, 1f))
             Debug.Log("SPACE");
         if(KeyController.I.LongUp(KeyCode.Space, 1f))
             Debug.Log("SPACE UP");
@@ -40,7 +40,7 @@ public class PlayerController : MonoBehaviour
         if(KeyController.I.Double(KeyCode.G, 0.3f))
             Debug.Log("G");
         if(KeyController.I.DoubleUp(KeyCode.H, 0.3f))
-            Debug.Log("H");
+            Debug.Log("H");*/
 
         CheckKey();
         Rotate();
@@ -76,6 +76,7 @@ public class PlayerController : MonoBehaviour
     }
 
     void CheckMoveKey() {
+        int _dash = 1;
         float _horizontal = 0f, _vertical = 0f;
 
         if(Input.GetKey(KeyCode.A))
@@ -87,8 +88,14 @@ public class PlayerController : MonoBehaviour
         if(Input.GetKey(KeyCode.S))
             _vertical = -1;
 
+        if(KeyController.I.Double(KeyCode.A, 0.5f))
+            _dash = 50;
+        if(KeyController.I.Double(KeyCode.D, 0.5f))
+            _dash = 50;
+
+
         velocity = (transform.right * _horizontal) + (transform.forward * _vertical);
-        velocity = velocity.normalized * speed;
+        velocity = velocity.normalized * speed * _dash;
     }
 
     void CheckRunKey() {
