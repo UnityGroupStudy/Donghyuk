@@ -38,6 +38,8 @@ public class PlayerController : MonoBehaviour
     private Camera theCamera;
     private Rigidbody myRigid;
 
+    private StatusController theStatusController;
+
     void Start()
     {
         capsuleCollider = GetComponent<CapsuleCollider>();
@@ -45,6 +47,7 @@ public class PlayerController : MonoBehaviour
         applySpeed = walkSpeed;
         originPosY = theCamera.transform.localPosition.y;
         applyCrouchPosY = originPosY;
+        theStatusController = FindObjectOfType<StatusController>(); 
     }
 
 
@@ -100,7 +103,7 @@ public class PlayerController : MonoBehaviour
     }
 
     private void TryJump() {
-         if(Input.GetKeyDown(KeyCode.Space) && isGround) {
+         if(Input.GetKeyDown(KeyCode.Space) && isGround && theStatusController.GetCurrentSP() > 0) {
              Jump();
          }
     }
@@ -109,14 +112,16 @@ public class PlayerController : MonoBehaviour
         if(isCrouch)
             Crouch();
 
+        theStatusController.DecreaseStamina(100);
+
         myRigid.velocity = Vector3.up * jumpForce;
     }
 
     private void TryRun() {
-        if(Input.GetKeyDown(KeyCode.LeftShift)) {
+        if(Input.GetKey(KeyCode.LeftShift) && theStatusController.GetCurrentSP() > 0) {
             Running();
         }
-        if(Input.GetKeyUp(KeyCode.LeftShift)) {
+        if(Input.GetKeyUp(KeyCode.LeftShift) || theStatusController.GetCurrentSP() <= 0) {
             RunningCancel();
         }
     }
@@ -125,6 +130,7 @@ public class PlayerController : MonoBehaviour
         if(isCrouch)
             Crouch();
 
+        theStatusController.DecreaseStamina(10);
         isRun = true;
         applySpeed = runSpeed;
     }
